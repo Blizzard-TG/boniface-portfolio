@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Blog | Boniface Mghendi</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <button id="themeToggle" title="Toggle Dark/Light Mode">🌓</button>
+
+  <header class="hero">
+    <h1><span>My Blog</span></h1>
+    <p>Thoughts • Tips • Security Insights • Developer Diaries</p>
+  </header>
+
+  <nav>
+    <ul>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="resume.html">Resume</a></li>
+      <li><a href="projects.html">Projects</a></li>
+      <li><a href="blog.html" class="active">Blog</a></li>
+      <li><a href="contact.html">Contact</a></li>
+      <li><a href="admin.html">Admin</a></li>
+    </ul>
+  </nav>
+
+  <main class="main-content">
+    <section id="blogPosts">
+      <h2>Latest Posts</h2>
+      <div id="postsContainer">
+        <!-- Posts will be dynamically loaded here -->
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 Boniface Mghendi. All rights reserved.</p>
+  </footer>
+
+  <script src="script.js" defer></script>
+  <script>
+    // Load blog posts from localStorage
+    const postsContainer = document.getElementById('postsContainer');
+    const savedPosts = JSON.parse(localStorage.getItem('boniface_blog_posts')) || [];
+
+    if (savedPosts.length > 0) {
+      savedPosts.reverse().forEach((post) => {
+        const postDiv = document.createElement('div');
+        postDiv.className = 'blog-post';
+        postDiv.innerHTML = `
+          <h3>${post.title}</h3>
+          <p><em>${new Date(post.date).toLocaleString()}</em></p>
+          <p>${post.content}</p>
+        `;
+        postsContainer.appendChild(postDiv);
+      });
+    } else {
+      postsContainer.innerHTML = `
+        <p>No blog posts yet. Check back soon!</p>
+      `;
+    }
+  </script>
+</body>
+</html>
