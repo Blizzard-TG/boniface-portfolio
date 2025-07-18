@@ -1,5 +1,5 @@
 // script.js
-
+/*
 document.addEventListener("DOMContentLoaded", () => {
   const themeToggle = document.getElementById("themeToggle");
   const body = document.body;
@@ -32,3 +32,4 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 });
+*/
