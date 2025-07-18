@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Panel | Boniface Mghendi</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    #adminContent { display: none; padding: 2rem; }
+    #loginForm { padding: 2rem; }
+    .hidden { display: none; }
+    textarea { width: 100%; resize: vertical; }
+  </style>
+</head>
+<body>
+  <button id="themeToggle" title="Toggle Dark/Light Mode">🌓</button>
+
+  <header class="hero">
+    <h1><span>Admin Dashboard</span></h1>
+    <p>Private Access Only</p>
+  </header>
+
+  <main>
+    <!-- Login -->
+    <section id="loginForm">
+      <h2>🔐 Enter Admin Password</h2>
+      <input type="password" id="adminPassword" placeholder="Enter password" />
+      <button onclick="checkPassword()">Unlock</button>
+      <p id="loginError" style="color:red;"></p>
+    </section>
+
+    <!-- Admin Area -->
+    <section id="adminContent">
+      <h2>✅ Welcome, Admin</h2>
+
+      <!-- Blog Manager -->
+      <div>
+        <h3>📝 Add Blog Post</h3>
+        <input type="text" id="postTitle" placeholder="Title" /><br><br>
+        <textarea id="postContent" rows="6" placeholder="Write your content here..."></textarea><br>
+        <button onclick="addPost()">Save Post</button>
+        <p id="postMsg" style="color: green;"></p>
+      </div>
+
+      <hr>
+
+      <!-- Video Upload -->
+      <div>
+        <h3>🎥 Update Intro Video</h3>
+        <input type="file" id="adminVideoUpload" accept="video/*" />
+        <video id="adminVideoPreview" controls style="width:100%; max-width:600px; display:none;"></video>
+      </div>
+
+      <hr>
+
+      <!-- Site Stats -->
+      <div>
+        <h3>📊 Stats</h3>
+        <p id="blogStats"></p>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 Boniface Mghendi. All rights reserved.</p>
+  </footer>
+
+  <script src="script.js" defer></script>
+  <script>
+    // Obfuscated password check (basic)
+    function checkPassword() {
+      const input = document.getElementById('adminPassword').value.trim();
+      const allowed = atob('Ym9uaUFjY2VzczIwMjU='); // "boniAccess2025"
+      if (input === allowed) {
+        document.getElementById('loginForm').style.display = 'none';
+        document.getElementById('adminContent').style.display = 'block';
+        updateStats();
+      } else {
+        document.getElementById('loginError').textContent = '❌ Incorrect password';
+      }
+    }
+
+    // Add blog post
+    function addPost() {
+      const title = document.getElementById('postTitle').value.trim();
+      const content = document.getElementById('postContent').value.trim();
+      if (!title || !content) {
+        alert('Please fill out both fields');
+        return;
+      }
+      const posts = JSON.parse(localStorage.getItem('boniface_blog_posts')) || [];
+      posts.push({ title, content, date: new Date().toISOString() });
+      localStorage.setItem('boniface_blog_posts', JSON.stringify(posts));
+      document.getElementById('postMsg').textContent = '✅ Post saved!';
+      document.getElementById('postTitle').value = '';
+      document.getElementById('postContent').value = '';
+      updateStats();
+    }
+
+    // Show stats
+    function updateStats() {
+      const posts = JSON.parse(localStorage.getItem('boniface_blog_posts')) || [];
+      document.getElementById('blogStats').innerHTML = `
+        Total Blog Posts: <strong>${posts.length}</strong><br>
+        Last Post: <strong>${posts.length ? new Date(posts[posts.length - 1].date).toLocaleString() : 'N/A'}</strong>
+      `;
+    }
+
+    // Handle video preview
+    document.getElementById('adminVideoUpload').addEventListener('change', function(e) {
+      const file = e.target.files[0];
+      if (file && file.type.startsWith('video/')) {
+        const reader = new FileReader();
+        reader.onload = function(event) {
+          const preview = document.getElementById('adminVideoPreview');
+          preview.src = event.target.result;
+          preview.style.display = 'block';
+        };
+        reader.readAsDataURL(file);
+      }
+    });
+  </script>
+</body>
+</html>
