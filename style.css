@@ -188,3 +188,97 @@ footer {
   from { opacity: 0; transform: translateY(-20px); }
   to { opacity: 1; transform: translateY(0); }
 }
+
+/* ================================
+   MOBILE RESPONSIVE IMPROVEMENTS
+   (No GUI changes, only resizing)
+   ================================ */
+
+/* Make layouts fit on small screens */
+@media (max-width: 768px) {
+
+  /* General body scaling */
+  body {
+    font-size: 16px;
+    padding: 0;
+    margin: 0;
+  }
+
+  /* Hero section mobile spacing */
+  .hero {
+    padding: 3rem 1.5rem;
+  }
+
+  /* Navigation becomes vertical */
+  nav ul {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  nav ul li {
+    margin: 8px 0;
+  }
+
+  /* Sections squeeze neatly on mobile */
+  section {
+    padding: 2.5rem 1.2rem;
+    width: 95%;
+  }
+
+  /* Make CTA buttons scale */
+  .cta {
+    padding: 0.8rem 1.4rem;
+    font-size: 1rem;
+  }
+
+  /* Skills badges wrap nicely */
+  .skills span {
+    font-size: 0.85rem;
+    padding: 8px 12px;
+  }
+
+  /* Blog posts shrink without overflow */
+  #blog .blog-post {
+    padding: 0.8rem;
+  }
+
+  /* Upload video fully responsive */
+  #upload video {
+    max-width: 100%;
+    width: 100%;
+  }
+
+  /* Footer text remains readable */
+  footer {
+    padding: 1.5rem 1rem;
+    font-size: 0.9rem;
+  }
+}
+
+/* Ultra-small screens (old phones, 360px) */
+@media (max-width: 480px) {
+  .hero {
+    padding: 2.5rem 1rem;
+  }
+
+  nav ul li a {
+    font-size: 0.95rem;
+  }
+
+  section {
+    padding: 2rem 1rem;
+  }
+
+  h2 {
+    font-size: 1.3rem;
+  }
+
+  .cta {
+    width: 100%;
+    text-align: center;
+  }
+
+  .skills span {
+    font-size: 0.8rem;
+  }
+}
